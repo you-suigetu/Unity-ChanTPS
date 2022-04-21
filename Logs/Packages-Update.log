@@ -54,3 +54,14 @@ The following packages were 更新済:
   com.unity.collab-proxy をバージョン 1.15.12 から 1.15.13 へ
   com.unity.ide.vscode をバージョン 1.2.4 から 1.2.5 へ
   com.unity.test-framework をバージョン 1.1.29 から 1.1.31 へ
+
+=== Thu Apr 21 18:42:18 2022
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were 更新済:
+  com.unity.cinemachine をバージョン 2.6.11 から 2.8.4 へ
+  com.unity.collab-proxy をバージョン 1.15.13 から 1.15.15 へ
+  com.unity.ide.rider をバージョン 2.0.7 から 3.0.13 へ
+  com.unity.timeline をバージョン 1.4.8 から 1.6.4 へ
