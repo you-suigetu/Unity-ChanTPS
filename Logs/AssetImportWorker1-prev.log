@@ -1,0 +1,241 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.2f1 (d6360bedb9a0) revision 14038539'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19044) 64bit Professional' Language: 'ja' Physical Memory: 32697 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2021.3.2f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+E:/Unity/Projects/Unity-ChanTPS
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+57577
+Successfully changed project path to: E:/Unity/Projects/Unity-ChanTPS
+E:/Unity/Projects/Unity-ChanTPS
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Refreshing native plugins compatible for Editor in 42.57 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.3.2f1 (d6360bedb9a0)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.2f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/Unity/Projects/Unity-ChanTPS/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Radeon RX 570 Series (ID=0x67df)
+    Vendor:   ATI
+    VRAM:     4075 MB
+    Driver:   30.0.13023.4001
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.2f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.2f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.2f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56436
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.007934 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 36.24 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.613 seconds
+Domain Reload Profiling:
+	ReloadAssembly (613ms)
+		BeginReloadAssembly (136ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (367ms)
+			LoadAssemblies (134ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (103ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (24ms)
+			SetupLoadedEditorAssemblies (192ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (7ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (36ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (107ms)
+				ProcessInitializeOnLoadMethodAttributes (41ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.006647 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 35.61 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.006 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1006ms)
+		BeginReloadAssembly (151ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (19ms)
+		EndReloadAssembly (743ms)
+			LoadAssemblies (131ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (190ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (44ms)
+			SetupLoadedEditorAssemblies (391ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (5ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (36ms)
+				BeforeProcessingInitializeOnLoad (56ms)
+				ProcessInitializeOnLoadAttributes (261ms)
+				ProcessInitializeOnLoadMethodAttributes (25ms)
+				AfterProcessingInitializeOnLoad (9ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (7ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.55 seconds
+Refreshing native plugins compatible for Editor in 1.09 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2255 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 36 unused Assets / (129.3 KB). Loaded Objects now: 2720.
+Memory consumption went from 103.0 MB to 102.9 MB.
+Total: 4.534000 ms (FindLiveObjects: 0.396800 ms CreateObjectMapping: 0.098200 ms MarkObjects: 3.854400 ms  DeleteObjects: 0.182700 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 1140364.334710 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/WAIT01.fbx
+  artifactKey: Guid(cd70dfde2b170fc45a960948ef3ec7d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/WAIT01.fbx using Guid(cd70dfde2b170fc45a960948ef3ec7d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5ddfd3b1c7cad5acb246c753f2c42dc3') in 0.511084 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/RUN00_R.fbx
+  artifactKey: Guid(6aa8a802317526d409ed47a5a49cc6c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/RUN00_R.fbx using Guid(6aa8a802317526d409ed47a5a49cc6c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd77c38e12ed59070175fc5ccb0d0fbb5') in 0.065982 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/_MyAssets/Actions/TPC.inputactions
+  artifactKey: Guid(7fc3daf4907dfd542abb94158f1cd58f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Actions/TPC.inputactions using Guid(7fc3daf4907dfd542abb94158f1cd58f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '183d258529f02baaa7f19545ce8769ba') in 0.008017 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/WALK00_B.fbx
+  artifactKey: Guid(63d109872cdd85c438de586f96223721) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/WALK00_B.fbx using Guid(63d109872cdd85c438de586f96223721) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5ccc295104243dc2c314d886e76b8e63') in 0.073655 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/JUMP01B.fbx
+  artifactKey: Guid(f93ca7f23c1655742a04b1c684274a34) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/JUMP01B.fbx using Guid(f93ca7f23c1655742a04b1c684274a34) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52c4fd66491af33705647ab93b29fecd') in 0.061177 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/RUN00_F.fbx
+  artifactKey: Guid(783952fa6f9c9f045ba4997f721e893e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/RUN00_F.fbx using Guid(783952fa6f9c9f045ba4997f721e893e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ab920a5a2b26b0d7ce8b1e7b9b1f6a5') in 0.062650 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000044 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/JUMP00.fbx
+  artifactKey: Guid(234375e30d9ef7948927cde0c5c066ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/JUMP00.fbx using Guid(234375e30d9ef7948927cde0c5c066ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e7b8cbc096adddbc3aba44f9cd53be4') in 0.085269 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/JUMP00B.fbx
+  artifactKey: Guid(c459dceb59ed91943a663956b693d696) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/JUMP00B.fbx using Guid(c459dceb59ed91943a663956b693d696) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '07ee2fa5493f8f70cd1209c925b8e0f8') in 0.072300 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/WIN00.fbx
+  artifactKey: Guid(8fc48f5ebed8fac46aae9ae4d2347dc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/WIN00.fbx using Guid(8fc48f5ebed8fac46aae9ae4d2347dc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b73b7c2e6613811453de033efaf2f3d') in 0.076820 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/WALK00_L.fbx
+  artifactKey: Guid(5e0f36a4181b0bb478fd09a0dd4c6edf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/WALK00_L.fbx using Guid(5e0f36a4181b0bb478fd09a0dd4c6edf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9d565baf446a1ddda2d3dcdcfd31fb3b') in 0.072083 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/WALK00_F.fbx
+  artifactKey: Guid(38021a748e71fee44b1d6290e495ebfa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/WALK00_F.fbx using Guid(38021a748e71fee44b1d6290e495ebfa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '967f6e77e9a0cfae02e47f8bc4150d41') in 0.065120 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/_MyAssets/Actions
+  artifactKey: Guid(e084723232901c9418d1fe26b9b3a564) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Actions using Guid(e084723232901c9418d1fe26b9b3a564) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '68a0955d3c2cdaf49bbabf2d4831f7c0') in 0.002925 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/WAIT00.fbx
+  artifactKey: Guid(c7e86875e6fcb7f448a7f1a97bcb15e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/WAIT00.fbx using Guid(c7e86875e6fcb7f448a7f1a97bcb15e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eab59dfad6594625da307aa981f32500') in 0.074417 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/_MyAssets/Animations/Unity-Chan/DAMAGED01.fbx
+  artifactKey: Guid(5203871842c2fbe4383335b115247710) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_MyAssets/Animations/Unity-Chan/DAMAGED01.fbx using Guid(5203871842c2fbe4383335b115247710) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3db5bc4c664120a32cbc57b6ce3f4dd8') in 0.070986 seconds 
