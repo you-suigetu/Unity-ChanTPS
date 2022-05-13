@@ -75,7 +75,8 @@ namespace MyTPCSys
 		// animation IDs
 		private int _animIDSpeed;
 		private int _animIDGrounded;
-		private int _animIDJump;
+		private int _animIDJumpStart;
+		private int _animIDJumping;
 		private int _animIDFreeFall;
 		private int _animIDMotionSpeed;
 
@@ -88,25 +89,20 @@ namespace MyTPCSys
 
 		private bool _hasAnimator;
 
-
 		//追加分
-		private bool _isJump;
-		private bool _isFreeFall;
 		private bool _isJumpStart;
+		private bool _isJumping;
+		private bool _isFreeFall;
 		private bool _isLanding;
+
+		private bool _isJumpImpulse;
 
 		private int _animIDLanding;
 
-
-		private bool _jumpTrigger;
-
-		private string _animNameDefault;
-		private string _animNameJumping;
-		private string _animNameFalling;
-		private string _animNameLanding;
-
 		private float _jumpVelocity;
 
+		private string _animNameJumping;
+		private string _animNameLandingEnd;
 
 		private void Awake()
 		{
@@ -123,7 +119,6 @@ namespace MyTPCSys
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<TPCInput>();
 
-			AssignAnimationIDs();
 			AssignAnimationNames();
 
 			//クールタイムをセット
@@ -131,29 +126,48 @@ namespace MyTPCSys
 			_fallTimeoutDelta = FallTimeout;
 
 			GroundedCheck();
+
+			if (_hasAnimator == true)
+			{
+				var clips = _animator.runtimeAnimatorController.animationClips;
+
+				//Debug.Log("Animation Clipの数 : " + clips.Length);
+
+				//for (int i = 0; i < clips.Length; i++)
+				//{
+				//	string stateName = clips[i].name;
+				//	Debug.Log(stateName + " " + i);
+				//}
+
+				_animNameJumping = clips[4].name;
+				_animNameLandingEnd = clips[5].name;
+			}
 		}
 
 		private void Update()
 		{
 			_hasAnimator = TryGetComponent(out _animator);
 
-			GetAnimatorState();
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+
+			if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == _animNameJumping)
+			{
+				_isJumping = true;
+			}
+
+			if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == _animNameLandingEnd)
+			{
+				_isLanding = false;
+			}
+
+
 		}
 
 		private void LateUpdate()
 		{
 			CameraRotation();
-		}
-
-		private void AssignAnimationIDs()
-		{
-			_animNameDefault = "IDOL WALK RUN";
-			_animNameJumping = "JUMP_Jumping";
-			_animNameFalling = "JUMP_Falling";
-			_animNameLanding = "JUMP_LandingStart";
 		}
 
 		private void AssignAnimationNames()
@@ -163,7 +177,8 @@ namespace MyTPCSys
 				_animIDSpeed = Animator.StringToHash("Speed");
 				_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 				_animIDGrounded = Animator.StringToHash("Grounded");
-				_animIDJump = Animator.StringToHash("Jump");
+				_animIDJumpStart = Animator.StringToHash("JumpStart");
+				_animIDJumping = Animator.StringToHash("Jumping");
 				_animIDFreeFall = Animator.StringToHash("FreeFall");
 				_animIDLanding = Animator.StringToHash("Landing");
 			}
@@ -171,18 +186,9 @@ namespace MyTPCSys
 
 		private void GroundedCheck()
 		{
-			if (_isJump == false) //ジャンプ処理中ではない
-			{
-				//球の位置をオフセット付きで設定
-				Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
-				Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
-
-			}
-
-			else
-			{
-				Grounded = false;
-			}
+			//球の位置をオフセット付きで設定
+			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
+			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
 
 			AnimatorUpdate();
 		}
@@ -279,14 +285,32 @@ namespace MyTPCSys
 
 		private void JumpAndGravity()
 		{
+			if (_isJumping == true) //ジャンプでの上昇を接地判定で上書きしないため
+			{
+				Grounded = false;
+				_isJumpStart = false;
+
+				if ( _isJumpImpulse == false)
+					{
+					_verticalVelocity = _jumpVelocity;
+
+					_isJumpImpulse = true; //無限上昇対策
+				}
+			}
+
 			if (Grounded == true)
 			{
+				if (_isFreeFall == true) //落下処理中
+				{
+					_isFreeFall = false;
+					_isLanding = true; //着地モーションに移行
+					AnimatorUpdate();
+				}
+
 				//落下クールタイムをリセット
 				_fallTimeoutDelta = FallTimeout;
 
-				_jumpTrigger = false;
-
-				_isJump = false;
+				_isJumping = false;
 				_isFreeFall = false;
 				AnimatorUpdate();
 
@@ -301,9 +325,8 @@ namespace MyTPCSys
 				{
 					//目標高さに到達するために必要な速度を算出
 					_jumpVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-					
-					_isJump = true;
-					_isJumpStart = true;
+
+					_isJumpStart = true; //ジャンプモーションへの移行フラグ成立
 
 					AnimatorUpdate();
 				}
@@ -317,8 +340,8 @@ namespace MyTPCSys
 
 			else
 			{
-				////ジャンプのクールタイム再セット
-				//_jumpTimeoutDelta = JumpTimeout;
+				//ジャンプのクールタイム再セット
+				_jumpTimeoutDelta = JumpTimeout;
 
 				////微小な段差での落下モーション移行対策
 				//if (_fallTimeoutDelta >= 0.0f)
@@ -332,34 +355,16 @@ namespace MyTPCSys
 				//	AnimatorUpdate();
 				//}
 
-				if (_isJump == true) //ジャンプ処理中
+				//微小な段差での落下モーション移行対策
+				if (_fallTimeoutDelta >= 0.0f)
 				{
-					if ((_isJumpStart == false) && (_jumpTrigger == false))
-					{
-						_jumpTrigger = true;
-						_verticalVelocity = _jumpVelocity;
-					}
-
-					if (_verticalVelocity <= 0)
-					{
-						_isFreeFall = true;
-						AnimatorUpdate();
-					}
+					_fallTimeoutDelta -= Time.deltaTime;
 				}
 
-				else //それ以外(落下)
+				else
 				{
-					//微小な段差での落下モーション移行対策
-					if (_fallTimeoutDelta >= 0.0f)
-					{
-						_fallTimeoutDelta -= Time.deltaTime;
-					}
-
-					else
-					{
-						_isFreeFall = true;
-						AnimatorUpdate();
-					}
+					_isFreeFall = true;
+					AnimatorUpdate();
 				}
 
 				//空中にいる間はジャンプ入力をオフに
@@ -371,6 +376,15 @@ namespace MyTPCSys
 			{
 				_verticalVelocity += Gravity * Time.deltaTime;
 			}
+
+			if ((_verticalVelocity <= 0) && (_isJumping == true)) //ジャンプから落下に移行
+			{
+				_isJumpImpulse = false; //フラグリセット
+
+				_isJumping = false;
+				_isFreeFall = true;
+				AnimatorUpdate();
+			}
 		}
 
 		private void AnimatorUpdate()
@@ -378,38 +392,11 @@ namespace MyTPCSys
 			if (_hasAnimator == true)
 			{
 				_animator.SetBool(_animIDGrounded, Grounded);
-				_animator.SetBool(_animIDJump, _isJump);
+				_animator.SetBool(_animIDJumpStart, _isJumpStart);
+				_animator.SetBool(_animIDJumping, _isJumping);
 				_animator.SetBool(_animIDFreeFall, _isFreeFall);
 				_animator.SetBool(_animIDLanding, _isLanding);
 			}
-		}
-
-		private void GetAnimatorState()
-		{
-			if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animNameDefault) == true)
-			{
-				_isLanding = false;
-			}
-
-			if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animNameJumping) == true)
-			{
-				_isJumpStart = false;
-			}
-
-
-			if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animNameFalling) == true)
-			{
-				_isJump = false;
-			}
-
-
-			if (_animator.GetCurrentAnimatorStateInfo(0).IsName(_animNameLanding) == true)
-			{
-				_isFreeFall = false;
-				_isLanding = true;
-			}
-
-			AnimatorUpdate();
 		}
 
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
