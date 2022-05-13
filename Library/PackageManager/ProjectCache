@@ -5,22 +5,22 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637861317039739937
-    m_Hash: 2928919087
+      ticks: 637880474030366724
+    m_Hash: 209325381
   m_LockFileStatus:
     m_FilePath: E:/Unity/Projects/Unity-ChanTPS/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637861317039759969
-    m_Hash: 2994297605
+      ticks: 637880474122469457
+    m_Hash: 864755257
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
   m_LocalFileStatus: []
 m_ProjectPath: E:/Unity/Projects/Unity-ChanTPS/Packages
-m_EditorVersion: 2021.3.0f1 (6eacc8284459)
+m_EditorVersion: 2021.3.2f1 (d6360bedb9a0)
 m_ResolvedPackages:
 - packageId: com.unity.cinemachine@2.8.4
   testable: 0
@@ -151,12 +151,12 @@ m_ResolvedPackages:
   unityLifecycle:
     version: 2.8.4
     nextVersion: 
-- packageId: com.unity.collab-proxy@1.15.15
+- packageId: com.unity.collab-proxy@1.15.16
   testable: 0
   isDirectDependency: 1
-  version: 1.15.15
+  version: 1.15.16
   source: 1
-  resolvedPath: E:\Unity\Projects\Unity-ChanTPS\Library\PackageCache\com.unity.collab-proxy@1.15.15
+  resolvedPath: E:\Unity\Projects\Unity-ChanTPS\Library\PackageCache\com.unity.collab-proxy@1.15.16
   assetPath: Packages/com.unity.collab-proxy
   name: com.unity.collab-proxy
   displayName: Version Control
@@ -208,6 +208,8 @@ m_ResolvedPackages:
     - 1.14.12
     - 1.14.13
     - 1.14.15
+    - 1.14.16
+    - 1.14.17
     - 1.15.1
     - 1.15.4
     - 1.15.7
@@ -215,6 +217,8 @@ m_ResolvedPackages:
     - 1.15.12
     - 1.15.13
     - 1.15.15
+    - 1.15.16
+    - 1.15.17
     - 2.0.0-preview.6
     - 2.0.0-preview.8
     - 2.0.0-preview.15
@@ -226,7 +230,8 @@ m_ResolvedPackages:
     - 2.1.0-preview.5
     - 2.1.0-preview.6
     compatible:
-    - 1.15.15
+    - 1.15.16
+    - 1.15.17
     - 2.0.0-preview.6
     - 2.0.0-preview.8
     - 2.0.0-preview.15
@@ -237,14 +242,18 @@ m_ResolvedPackages:
     - 2.1.0-preview.3
     - 2.1.0-preview.5
     - 2.1.0-preview.6
-    verified: 1.15.15
+    verified: 1.15.17
   dependencies:
   - name: com.unity.services.core
     version: 1.0.1
   resolvedDependencies:
   - name: com.unity.services.core
-    version: 1.0.1
+    version: 1.3.1
   - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.0.2
+  - name: com.unity.modules.androidjni
     version: 1.0.0
   keywords:
   - backup
@@ -269,16 +278,16 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 637828649420000000
+  datePublishedTicks: 637847776260000000
   documentationUrl: 
   hasRepository: 1
   repository:
     type: git
     url: https://github.cds.internal.unity3d.com/unity/com.unity.cloud.collaborate.git
-    revision: abf10445fb869983dbe4f8f87ec63c58f4cd36e0
+    revision: 714a2838c2d55add3d0accf539488f96caa757b2
     path: 
   unityLifecycle:
-    version: 1.15.15
+    version: 1.15.16
     nextVersion: 
 - packageId: com.unity.ide.rider@3.0.13
   testable: 0
@@ -331,9 +340,11 @@ m_ResolvedPackages:
     - 3.0.10
     - 3.0.12
     - 3.0.13
+    - 3.0.14
     compatible:
     - 3.0.13
-    verified: 3.0.13
+    - 3.0.14
+    verified: 3.0.14
   dependencies:
   - name: com.unity.ext.nunit
     version: 1.0.6
@@ -350,7 +361,7 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 637837345400000000
   documentationUrl: 
   hasRepository: 1
   repository:
@@ -400,9 +411,11 @@ m_ResolvedPackages:
     - 2.0.11
     - 2.0.12
     - 2.0.14
+    - 2.0.15
     compatible:
     - 2.0.14
-    verified: 2.0.14
+    - 2.0.15
+    verified: 2.0.15
   dependencies:
   - name: com.unity.test-framework
     version: 1.1.9
@@ -649,10 +662,12 @@ m_ResolvedPackages:
     - 1.1.29
     - 1.1.30
     - 1.1.31
+    - 2.0.1-exp.1
     - 2.0.1-pre.12
     - 2.0.1-pre.18
     compatible:
     - 1.1.31
+    - 2.0.1-exp.1
     - 2.0.1-pre.12
     - 2.0.1-pre.18
     verified: 1.1.31
@@ -2862,12 +2877,12 @@ m_ResolvedPackages:
   unityLifecycle:
     version: 1.0.6
     nextVersion: 
-- packageId: com.unity.services.core@1.0.1
+- packageId: com.unity.services.core@1.3.1
   testable: 0
   isDirectDependency: 0
-  version: 1.0.1
+  version: 1.3.1
   source: 1
-  resolvedPath: E:\Unity\Projects\Unity-ChanTPS\Library\PackageCache\com.unity.services.core@1.0.1
+  resolvedPath: E:\Unity\Projects\Unity-ChanTPS\Library\PackageCache\com.unity.services.core@1.3.1
   assetPath: Packages/com.unity.services.core
   name: com.unity.services.core
   displayName: Services Core
@@ -2881,7 +2896,7 @@ m_ResolvedPackages:
     packages.
 
     These are standardized and aim to unify the overall experience
-    of working with Game Services packages.'
+    of working with Game Services SDK.'
   status: 4
   errors: []
   versions:
@@ -2895,22 +2910,27 @@ m_ResolvedPackages:
     - 1.1.0-pre.41
     - 1.1.0-pre.69
     - 1.2.0
+    - 1.3.1
+    - 1.3.2
+    - 1.4.0
     compatible:
-    - 1.0.1
-    - 1.1.0-pre.7
-    - 1.1.0-pre.8
-    - 1.1.0-pre.9
-    - 1.1.0-pre.10
-    - 1.1.0-pre.11
-    - 1.1.0-pre.41
-    - 1.1.0-pre.69
-    - 1.2.0
-    verified: 1.0.1
+    - 1.3.1
+    - 1.3.2
+    - 1.4.0
+    verified: 1.3.2
   dependencies:
   - name: com.unity.modules.unitywebrequest
     version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.0.2
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
   resolvedDependencies:
   - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.0.2
+  - name: com.unity.modules.androidjni
     version: 1.0.0
   keywords: []
   registry:
@@ -2922,14 +2942,81 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 637604883250000000
+  datePublishedTicks: 637846828270000000
   documentationUrl: 
   hasRepository: 1
   repository:
     type: git
     url: https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git
-    revision: 4cd880d4fd5c60597629249bf4f324e4c8d7aa2e
+    revision: a1cf55a5ba0e2555d508263fa48837ff56c4654a
     path: 
   unityLifecycle:
-    version: 1.0.1
-    nextVersion: 1.1.0-pre.8
+    version: 1.3.1
+    nextVersion: 
+- packageId: com.unity.nuget.newtonsoft-json@3.0.2
+  testable: 0
+  isDirectDependency: 0
+  version: 3.0.2
+  source: 1
+  resolvedPath: E:\Unity\Projects\Unity-ChanTPS\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2
+  assetPath: Packages/com.unity.nuget.newtonsoft-json
+  name: com.unity.nuget.newtonsoft-json
+  displayName: Newtonsoft Json
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: library
+  description: 'Newtonsoft Json for use in Unity projects and Unity packages. Currently
+    synced to version 13.0.1.
+
+
+    This package is used for advanced json serialization
+    and deserialization. Most Unity users will be better suited using the existing
+    json tools built into Unity.
+
+    To avoid assembly clashes, please use this
+    package if you intend to use Newtonsoft Json.'
+  status: 4
+  errors: []
+  versions:
+    all:
+    - 1.0.0-preview.2
+    - 1.0.0-preview.3
+    - 1.0.0-preview.4
+    - 1.0.1-preview.1
+    - 1.1.2
+    - 2.0.0-preview
+    - 2.0.0-preview.1
+    - 2.0.0-preview.2
+    - 2.0.0
+    - 2.0.1-preview.1
+    - 2.0.2
+    - 3.0.2
+    compatible:
+    - 3.0.2
+    verified: 3.0.2
+  dependencies: []
+  resolvedDependencies: []
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+  hideInEditor: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 0
+  documentationUrl: 
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.nuget.newtonsoft-json.git
+    revision: 8f66870a71ad3f2cdd46330b5c482dfd138ffc64
+    path: 
+  unityLifecycle:
+    version: 3.0.2
+    nextVersion: 
