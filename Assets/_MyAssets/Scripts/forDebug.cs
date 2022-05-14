@@ -12,7 +12,7 @@ public class forDebug : MonoBehaviour
 	public float GameSpeed = 0.5f;
 
 	// Start is called before the first frame update
-	void Start()
+	void Awake()
     {
         if (debug == true)
 		{
@@ -21,8 +21,16 @@ public class forDebug : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void LateUpdate()
+	{
+		if (debug == true)
+		{
+			Time.timeScale = GameSpeed;
+		}
+
+		if (debug == false)
+		{
+			Time.timeScale = 1.0f;
+		}
+	}
 }
