@@ -113,6 +113,7 @@ namespace MyTPCSys
 		private float _jumpVelocity;
 
 		private string _animNameLandingEnd;
+		private string _animNameMoveLandingEnd;
 
 		private string animName;
 
@@ -164,6 +165,7 @@ namespace MyTPCSys
 				}
 
 				_animNameLandingEnd = clips[6].name;
+				_animNameMoveLandingEnd = clips[8].name;
 			}
 		}
 
@@ -439,7 +441,7 @@ namespace MyTPCSys
 				{
 					animName = _animator.GetCurrentAnimatorClipInfo(0)[0].clip.name; //再生中のアニメーションを取得
 					
-					if(animName == _animNameLandingEnd) //着地から起き上がりに移行している
+					if(animName == _animNameLandingEnd || animName == _animNameMoveLandingEnd) //着地から起き上がりに移行している
 					{
 						_isWalk = false;
 						_isRun = false;
