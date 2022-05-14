@@ -75,7 +75,6 @@ namespace MyTPCSys
 		// animation IDs
 		private int _animIDSpeed;
 		private int _animIDGrounded;
-		private int _animIDJumpStart;
 		private int _animIDJumping;
 		private int _animIDFreeFall;
 		private int _animIDMotionSpeed;
@@ -90,7 +89,6 @@ namespace MyTPCSys
 		private bool _hasAnimator;
 
 		//追加分
-		private bool _isJumpStart;
 		private bool _isJumping;
 		private bool _isFreeFall;
 		private bool _isLanding;
@@ -177,7 +175,6 @@ namespace MyTPCSys
 				_animIDSpeed = Animator.StringToHash("Speed");
 				_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 				_animIDGrounded = Animator.StringToHash("Grounded");
-				_animIDJumpStart = Animator.StringToHash("JumpStart");
 				_animIDJumping = Animator.StringToHash("Jumping");
 				_animIDFreeFall = Animator.StringToHash("FreeFall");
 				_animIDLanding = Animator.StringToHash("Landing");
@@ -285,19 +282,6 @@ namespace MyTPCSys
 
 		private void JumpAndGravity()
 		{
-			if (_isJumping == true) //ジャンプでの上昇を接地判定で上書きしないため
-			{
-				Grounded = false;
-				_isJumpStart = false;
-
-				if ( _isJumpImpulse == false)
-					{
-					_verticalVelocity = _jumpVelocity;
-
-					_isJumpImpulse = true; //無限上昇対策
-				}
-			}
-
 			if (Grounded == true)
 			{
 				if (_isFreeFall == true) //落下処理中
@@ -321,12 +305,12 @@ namespace MyTPCSys
 				}
 
 				//ジャンプ判定
-				if (_input.jump == true && _jumpTimeoutDelta <= 0.0f)
+				if (_input.jump == true && _isLanding == false && _jumpTimeoutDelta <= 0.0f)
 				{
 					//目標高さに到達するために必要な速度を算出
-					_jumpVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
-					_isJumpStart = true; //ジャンプモーションへの移行フラグ成立
+					_isJumping = true; //ジャンプモーションへの移行フラグ成立
 
 					AnimatorUpdate();
 				}
@@ -379,8 +363,6 @@ namespace MyTPCSys
 
 			if ((_verticalVelocity <= 0) && (_isJumping == true)) //ジャンプから落下に移行
 			{
-				_isJumpImpulse = false; //フラグリセット
-
 				_isJumping = false;
 				_isFreeFall = true;
 				AnimatorUpdate();
@@ -392,7 +374,6 @@ namespace MyTPCSys
 			if (_hasAnimator == true)
 			{
 				_animator.SetBool(_animIDGrounded, Grounded);
-				_animator.SetBool(_animIDJumpStart, _isJumpStart);
 				_animator.SetBool(_animIDJumping, _isJumping);
 				_animator.SetBool(_animIDFreeFall, _isFreeFall);
 				_animator.SetBool(_animIDLanding, _isLanding);

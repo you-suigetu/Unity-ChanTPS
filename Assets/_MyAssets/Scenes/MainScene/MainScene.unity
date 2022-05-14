@@ -1585,7 +1585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 1
-  GameSpeed: 1
+  GameSpeed: 0.439
 --- !u!4 &2080034284
 Transform:
   m_ObjectHideFlags: 0
