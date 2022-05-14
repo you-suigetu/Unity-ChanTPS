@@ -28,11 +28,19 @@ namespace MyTPCSys
 		[Tooltip("キャラクターに影響する重力 エンジンのデフォルトは-9.81f")]
 		public float Gravity = -15.0f;
 
+		[Tooltip("水平方向の空気抵抗(ジャンプ中の減速に使用)")]
+		public float AirDrag = -2.0f;
+
 		[Space(10)]
 		[Tooltip("ジャンプクールタイム")]
 		public float JumpTimeout = 0.50f;
 		[Tooltip("落下クールタイム(微妙な段差で落下モーションに入らないため)")]
 		public float FallTimeout = 0.15f;
+
+		[Tooltip("歩行ジャンプ時速度 m/s")]
+		public float MoveJumpSpeed = 3.0f;
+		[Tooltip("ダッシュジャンプ時速度 m/s")]
+		public float SpritJumpSpeed = 4.0f;		
 
 		[Header("Player Grounded")]
 		[Tooltip("接地判定フラグ (CharacterControllerの接地判定とは別)")]
@@ -89,6 +97,9 @@ namespace MyTPCSys
 		private bool _hasAnimator;
 
 		//追加分
+		private bool _isWalk;
+		private bool _isRun;
+
 		private bool _isJumping;
 		private bool _isFreeFall;
 		private bool _isLanding;
@@ -100,6 +111,18 @@ namespace MyTPCSys
 		private string _animNameLandingEnd;
 
 		private string animName;
+
+		private float targetSpeed;
+		private float BeforeSpeed;
+
+		private float currentHorizontalSpeed;
+
+		private float speedOffset = 0.1f;
+		private float inputMagnitude;
+
+		private Vector3 targetDirection;
+
+		private bool __JumpInputmPulse;
 
 		private void Awake()
 		{
@@ -201,32 +224,69 @@ namespace MyTPCSys
 
 		private void Move()
 		{
-			float targetSpeed;
+			//ジャンプ時の挙動変更のため、宣言位置変更
+			//private float targetSpeed;
 
-			if (_input.move == Vector2.zero)//Vector2の==演算子は近似を使用するため浮動小数点エラーが発生しにくい
+			if (_isJumping == false) //ジャンプ中かどうかで条件分け
 			{
-				targetSpeed = 0.0f; //移動入力がない場合は速度を0にセット
-			}
-
-			else
-			{
-				//ダッシュ入力を判別して移動速度セット
-				if (_input.sprint == false)
+				if (_input.move == Vector2.zero)//Vector2の==演算子は近似を使用するため浮動小数点エラーが発生しにくい
 				{
-					targetSpeed = MoveSpeed;
+					targetSpeed = 0.0f; //移動入力がない場合は速度を0にセット
 				}
 
 				else
 				{
-					targetSpeed = SprintSpeed;
+					//ダッシュ入力を判別して移動速度セット
+					if (_input.sprint == false)
+					{
+						targetSpeed = MoveSpeed;
+					}
+
+					else
+					{
+						targetSpeed = SprintSpeed;
+					}
 				}
+
+				//ジャンプ時の挙動変更のため、宣言位置変更
+				//float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+
+				//float speedOffset = 0.1f;
+				//float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+
+				_animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
 			}
 
-			//プレーヤーの現在の水平速度を参照 
-			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+			else
+			{
+				//ジャンプ中は移動入力不可
+				targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-			float speedOffset = 0.1f;
-			float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+				if (__JumpInputmPulse == false)
+				{
+					if (_isWalk == true) //歩行からのジャンプ
+					{
+						targetSpeed = MoveJumpSpeed;
+					}
+
+					else if (_isRun == true) //ダッシュからのジャンプ
+					{
+						targetSpeed = SpritJumpSpeed;
+					}
+
+					else //待機からのジャンプ
+					{
+						targetSpeed = 0.0f;
+					}
+				}
+
+				_animationBlend = Mathf.Lerp(_animationBlend, BeforeSpeed, Time.deltaTime * SpeedChangeRate);
+			}
+
+			inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+
+			//プレーヤーの現在の水平速度を参照 
+			currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
 			//目標速度まで加速または減速 
 			if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
@@ -244,23 +304,44 @@ namespace MyTPCSys
 				_speed = targetSpeed;
 			}
 
-			_animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-
 			//入力方向を正規化
 			Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
-			//キャラクターの向き修正
-			if (_input.move != Vector2.zero)
+			if (__JumpInputmPulse == false)
 			{
-				_targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
-				float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+				//キャラクターの向き修正
+				if (_input.move != Vector2.zero)
+				{
+					_targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
 
-				//カメラの位置を基準にして入力方向を向くように回転
-				transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+					float rotation;
+
+					if (_isJumping == false)
+					{
+						rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+					}
+
+					else
+					{
+						rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, 0.0f);
+						__JumpInputmPulse = true;
+					}
+
+					//カメラの位置を基準にして入力方向を向くように回転
+					transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+				}
+				
+				if (_isJumping == true && __JumpInputmPulse == false) //ジャンプ入力時に方向入力が無かった場合
+				{
+					__JumpInputmPulse = true;
+				}
 			}
 
-			//移動先の算出
-			Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+			//移動方向の算出
+			//ジャンプ時の挙動変更のため、宣言位置変更
+			//Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+
+			targetDirection = transform.rotation * Vector3.forward;
 
 			//キャラクターの移動
 			_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
@@ -293,6 +374,19 @@ namespace MyTPCSys
 						//目標高さに到達するために必要な速度を算出
 						_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
+						if (_input.move != Vector2.zero)
+						{
+							if (_input.sprint == false)
+							{
+								_isWalk = true;
+							}
+
+							else
+							{
+								_isRun = true;
+							}
+						}
+
 						_isJumping = true;
 
 						AnimatorUpdate();
@@ -311,8 +405,13 @@ namespace MyTPCSys
 					
 					if(animName == _animNameLandingEnd) //着地から起き上がりに移行している
 					{
+						_isWalk = false;
+						_isRun = false;
+
 						_isLanding = false;
 						_isJumping = false;
+
+						__JumpInputmPulse = false;
 
 						//ジャンプのクールタイム再セット
 						_jumpTimeoutDelta = JumpTimeout;
@@ -325,7 +424,6 @@ namespace MyTPCSys
 						_input.jump = false; //着地モーション中はジャンプ入力を無効化
 					}
 				}
-
 			}
 
 			else
