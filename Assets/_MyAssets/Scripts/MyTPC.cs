@@ -97,6 +97,7 @@ namespace MyTPCSys
 		private bool _hasAnimator;
 
 		//追加分
+		private bool _isWait;
 		private bool _isWalk;
 		private bool _isRun;
 
@@ -104,6 +105,9 @@ namespace MyTPCSys
 		private bool _isFreeFall;
 		private bool _isLanding;
 
+		private int _animIDWait;
+		private int _animIDWalk;
+		private int _animIDRun;
 		private int _animIDLanding;
 
 		private float _jumpVelocity;
@@ -170,6 +174,35 @@ namespace MyTPCSys
 			JumpAndGravity();
 			Move();
 			GroundedCheck();
+
+			if (_isJumping == false && _isFreeFall == false)
+			{
+				if (_input.move != Vector2.zero)
+				{
+					if (_input.sprint == false)
+					{
+						_isWait = false;
+						_isWalk = true;
+						_isRun = false;
+					}
+
+					else
+					{
+						_isWait = false;
+						_isWalk = false;
+						_isRun = true;
+					}
+				}
+
+				else
+				{
+					_isWait = true;
+					_isWalk = false;
+					_isRun = false;
+				}
+
+				AnimatorUpdate();
+			}
 		}
 
 		private void LateUpdate()
@@ -184,6 +217,9 @@ namespace MyTPCSys
 				_animIDSpeed = Animator.StringToHash("Speed");
 				_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 				_animIDGrounded = Animator.StringToHash("Grounded");
+				_animIDWait = Animator.StringToHash("Wait");
+				_animIDWalk = Animator.StringToHash("Walk");
+				_animIDRun = Animator.StringToHash("Run");
 				_animIDJumping = Animator.StringToHash("Jumping");
 				_animIDFreeFall = Animator.StringToHash("FreeFall");
 				_animIDLanding = Animator.StringToHash("Landing");
@@ -489,6 +525,9 @@ namespace MyTPCSys
 			if (_hasAnimator == true)
 			{
 				_animator.SetBool(_animIDGrounded, Grounded);
+				_animator.SetBool(_animIDWait, _isWait);
+				_animator.SetBool(_animIDWalk, _isWalk);
+				_animator.SetBool(_animIDRun, _isRun);
 				_animator.SetBool(_animIDJumping, _isJumping);
 				_animator.SetBool(_animIDFreeFall, _isFreeFall);
 				_animator.SetBool(_animIDLanding, _isLanding);
