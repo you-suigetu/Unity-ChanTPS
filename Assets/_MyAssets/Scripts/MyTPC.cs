@@ -227,7 +227,7 @@ namespace MyTPCSys
 			//ジャンプ時の挙動変更のため、宣言位置変更
 			//private float targetSpeed;
 
-			if (_isJumping == false) //ジャンプ中かどうかで条件分け
+			if (_isJumping == false && _isFreeFall == false) //ジャンプ中または自由落下かどうかで条件分け
 			{
 				if (_input.move == Vector2.zero)//Vector2の==演算子は近似を使用するため浮動小数点エラーが発生しにくい
 				{
@@ -316,7 +316,7 @@ namespace MyTPCSys
 
 					float rotation;
 
-					if (_isJumping == false)
+					if (_isJumping == false &&  _isFreeFall == false)
 					{
 						rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
 					}
@@ -331,7 +331,7 @@ namespace MyTPCSys
 					transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
 				}
 				
-				if (_isJumping == true && __JumpInputmPulse == false) //ジャンプ入力時に方向入力が無かった場合
+				if ((_isJumping == true || _isFreeFall == true) && __JumpInputmPulse == false) //ジャンプ入力時もしくは自由落下時に方向入力が無かった場合
 				{
 					__JumpInputmPulse = true;
 				}
@@ -451,6 +451,22 @@ namespace MyTPCSys
 				{
 					if (_verticalVelocity <= 0) //落下
 					{
+						if (_isJumping == false) //自由落下時のみ、移動入力を保持
+						{
+							if (_input.move != Vector2.zero)
+							{
+								if (_input.sprint == false)
+								{
+									_isWalk = true;
+								}
+
+								else
+								{
+									_isRun = true;
+								}
+							}
+						}
+
 						_isFreeFall = true;
 
 						AnimatorUpdate();
