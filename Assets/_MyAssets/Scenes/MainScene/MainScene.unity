@@ -1342,7 +1342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3102934981221123674, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: JumpHeight
-      value: 2
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 3102934981221123674, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: GroundLayers.m_Bits
@@ -1584,8 +1584,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196d5f25fa4144540ad895d322dadfe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
-  GameSpeed: 0.439
+  debug: 0
+  GameSpeed: 0.384
 --- !u!4 &2080034284
 Transform:
   m_ObjectHideFlags: 0

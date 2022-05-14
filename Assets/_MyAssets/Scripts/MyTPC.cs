@@ -93,14 +93,13 @@ namespace MyTPCSys
 		private bool _isFreeFall;
 		private bool _isLanding;
 
-		private bool _isJumpImpulse;
-
 		private int _animIDLanding;
 
 		private float _jumpVelocity;
 
-		private string _animNameJumping;
 		private string _animNameLandingEnd;
+
+		private string animName;
 
 		private void Awake()
 		{
@@ -129,16 +128,15 @@ namespace MyTPCSys
 			{
 				var clips = _animator.runtimeAnimatorController.animationClips;
 
-				//Debug.Log("Animation Clipの数 : " + clips.Length);
+				Debug.Log("Animation Clipの数 : " + clips.Length);
 
-				//for (int i = 0; i < clips.Length; i++)
-				//{
-				//	string stateName = clips[i].name;
-				//	Debug.Log(stateName + " " + i);
-				//}
+				for (int i = 0; i < clips.Length; i++)
+				{
+					string stateName = clips[i].name;
+					Debug.Log(stateName + " " + i);
+				}
 
-				_animNameJumping = clips[4].name;
-				_animNameLandingEnd = clips[5].name;
+				_animNameLandingEnd = clips[6].name;
 			}
 		}
 
@@ -147,20 +145,8 @@ namespace MyTPCSys
 			_hasAnimator = TryGetComponent(out _animator);
 
 			JumpAndGravity();
-			GroundedCheck();
 			Move();
-
-			if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == _animNameJumping)
-			{
-				_isJumping = true;
-			}
-
-			if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == _animNameLandingEnd)
-			{
-				_isLanding = false;
-			}
-
-
+			GroundedCheck();
 		}
 
 		private void LateUpdate()
@@ -187,7 +173,13 @@ namespace MyTPCSys
 			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
 			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
 
-			AnimatorUpdate();
+			if (_isFreeFall == true && Grounded == true) //落下中に接地を検出
+			{
+				_isFreeFall = false;
+				_isLanding = true;
+
+				AnimatorUpdate();
+			}
 		}
 
 		private void CameraRotation()
@@ -284,48 +276,60 @@ namespace MyTPCSys
 		{
 			if (Grounded == true)
 			{
-				if (_isFreeFall == true) //落下処理中
+				if (_isLanding == false)
 				{
-					_isFreeFall = false;
-					_isLanding = true; //着地モーションに移行
-					AnimatorUpdate();
+					//落下クールタイムをリセット
+					_fallTimeoutDelta = FallTimeout;
+
+					//接地時にかかる重力を一定に保つため
+					if (_verticalVelocity < 0.0f)
+					{
+						_verticalVelocity = -2f;
+					}
+
+					//ジャンプ判定
+					if (_input.jump == true && _jumpTimeoutDelta <= 0.0f)
+					{
+						//目標高さに到達するために必要な速度を算出
+						_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+						_isJumping = true;
+
+						AnimatorUpdate();
+					}
+
+					//ジャンプのクールタイム処理
+					if (_jumpTimeoutDelta >= 0.0f)
+					{
+						_jumpTimeoutDelta -= Time.deltaTime;
+					}
 				}
 
-				//落下クールタイムをリセット
-				_fallTimeoutDelta = FallTimeout;
-
-				_isJumping = false;
-				_isFreeFall = false;
-				AnimatorUpdate();
-
-				//接地時にかかる重力を一定に保つため
-				if (_verticalVelocity < 0.0f)
+				else
 				{
-					_verticalVelocity = -2f;
+					animName = _animator.GetCurrentAnimatorClipInfo(0)[0].clip.name; //再生中のアニメーションを取得
+					
+					if(animName == _animNameLandingEnd) //着地から起き上がりに移行している
+					{
+						_isLanding = false;
+						_isJumping = false;
+
+						//ジャンプのクールタイム再セット
+						_jumpTimeoutDelta = JumpTimeout;
+
+						AnimatorUpdate();
+					}
+
+					else
+					{
+						_input.jump = false; //着地モーション中はジャンプ入力を無効化
+					}
 				}
 
-				//ジャンプ判定
-				if (_input.jump == true && _isLanding == false && _jumpTimeoutDelta <= 0.0f)
-				{
-					//目標高さに到達するために必要な速度を算出
-					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-
-					_isJumping = true; //ジャンプモーションへの移行フラグ成立
-
-					AnimatorUpdate();
-				}
-
-				//ジャンプのクールタイム処理
-				if (_jumpTimeoutDelta >= 0.0f)
-				{
-					_jumpTimeoutDelta -= Time.deltaTime;
-				}
 			}
 
 			else
 			{
-				//ジャンプのクールタイム再セット
-				_jumpTimeoutDelta = JumpTimeout;
 
 				////微小な段差での落下モーション移行対策
 				//if (_fallTimeoutDelta >= 0.0f)
@@ -347,8 +351,12 @@ namespace MyTPCSys
 
 				else
 				{
-					_isFreeFall = true;
-					AnimatorUpdate();
+					if (_verticalVelocity <= 0) //落下
+					{
+						_isFreeFall = true;
+
+						AnimatorUpdate();
+					}
 				}
 
 				//空中にいる間はジャンプ入力をオフに
@@ -359,13 +367,6 @@ namespace MyTPCSys
 			if (_verticalVelocity < _terminalVelocity)
 			{
 				_verticalVelocity += Gravity * Time.deltaTime;
-			}
-
-			if ((_verticalVelocity <= 0) && (_isJumping == true)) //ジャンプから落下に移行
-			{
-				_isJumping = false;
-				_isFreeFall = true;
-				AnimatorUpdate();
 			}
 		}
 
